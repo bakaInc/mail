@@ -1,0 +1,54 @@
+Task 1
+
+ls|perl -lne 'print $_.";" ' 1>txt
+
+Or
+
+ls|perl -lne 'BEGIN{open($dc, ">txt")}; print $_.";"; print $dc $_.";"'
+
+Task 2
+
+cat txt|perl -le '$i = 0; $j = 0; while (defined($_ = <ARGV>)) {chomp $_;chop $_;if (int -s "$_" > 1048576) {print $_; $i++;}; $j++;} print $j." ".$i;'
+
+Task 3 
+
+cat txt|perl -MData::Dumper -lne '%hash = (); chop; chomp $_; opendir(my $dr, $_); @{$hash{$_}} = readdir $dr; print Dumper %hash;'  
+
+Task 4
+
+cat txt|perl -d -MData::Dumper -lne '%hash = (); chop; chomp $_; opendir(my $dr, $_); @{$hash{$_}} = readdir $dr; print Dumper %hash;'
+
+
+b 1 $dr == null
+
+c
+
+print %_
+
+print $dr
+
+print Dumper %hash
+
+c
+
+c
+
+B 1
+
+c
+
+q
+
+cat txt|perl -MO=Deparse -MData::Dumper -lne '%hash = (); chop; chomp $_; opendir(my $dr, $_); @{$hash{$_}} = readdir $dr; print Dumper %hash;'
+
+BEGIN { $/ = "\n"; $\ = "\n"; }
+use Data::Dumper;
+LINE: while (defined($_ = <ARGV>)) {
+    chomp $_;
+    (%hash) = ();
+    chop $_;
+    chomp $_;
+    opendir my $dr, $_;
+    @{$hash{$_};} = readdir $dr;
+    print Dumper(%hash);
+}
