@@ -1,0 +1,8 @@
+print "start"
+c
+print %_
+b 1 #@arr > 2
+print Dumper(@arr)
+c
+B 1
+q
