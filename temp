@@ -1,8 +1,61 @@
-print "start"
-c
-print %_
-b 1 #@arr > 2
-print Dumper(@arr)
-c
-B 1
-q
+#!/usr/bin/env perl
+
+
+@tgs = ();
+while (defined($_ = <ARGV>))
+{ 
+    
+    chomp($_);
+    #print $_."-\n";
+    push(@tgs, $_);
+}
+
+
+	
+
+GenerateArr(@tgs);
+
+
+sub GenerateArr 
+{
+	my($sins, $m, $n, @mines) = @_;
+	
+	#print "*\n".$sins." ".$m." ".$n."\n endl\n";
+
+	#for(@mines){print $_."\n";}
+
+	#print $n."- ".$m."- ";
+	
+	
+	#for(@mines){print $_."\n";}
+
+	#print "\n";
+	for(my $i = 0; $i < $n; $i++)
+	{
+		for(my $j = 0; $j < $m; $j++)
+		{
+			$index = 0;
+	
+			for (@mines)
+           		{
+				($a, $b) = split(/\s+/, $_);
+			       # print "\n".$a." ".$b."\n";
+				if ($i == $a && $j == $b) { print "#"; goto here; }
+
+                		if (abs($i - $a) <= $sins && abs($j - $b) <= $sins)
+                		{
+                 $index += abs(max(abs($i - $a), abs($j - $b)) - $sins - 1);
+			
+                            	}
+               					
+			}
+
+            		print $index;
+            		here:
+        	}
+
+        	print "\n";
+	}
+}
+
+sub max ($$) { $_[$_[0] < $_[1]] }
